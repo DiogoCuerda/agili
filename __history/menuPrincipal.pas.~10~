@@ -1,0 +1,47 @@
+unit menuPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Menus;
+
+type
+  TMenuPrincipalForm = class(TForm)
+    MainMenu1: TMainMenu;
+    Cadastro1: TMenuItem;
+    Usurios1: TMenuItem;
+    Itens1: TMenuItem;
+    Fornecedor1: TMenuItem;
+    Pedidos1: TMenuItem;
+    Financeiro1: TMenuItem;
+    RelatrioMensal1: TMenuItem;
+    Colaborador1: TMenuItem;
+    FazerPedido1: TMenuItem;
+
+  private
+    var
+    Permissao: Char;
+  public
+    constructor CreateCustom(AOwner: TComponent; APermissao:Char);
+  end;
+
+var
+  MenuPrincipalForm: TMenuPrincipalForm;
+
+implementation
+
+{$R *.dfm}
+
+
+
+constructor  TMenuPrincipalForm.CreateCustom(AOwner: TComponent; APermissao: Char);
+begin
+    inherited Create(AOwner);
+    Permissao := APermissao;
+end;
+
+
+
+
+end.

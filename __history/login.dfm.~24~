@@ -1,0 +1,115 @@
+object LoginForm: TLoginForm
+  Left = 0
+  Top = 0
+  BorderStyle = bsSingle
+  Caption = 'Login'
+  ClientHeight = 309
+  ClientWidth = 384
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -19
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  OnCreate = FormCreate
+  TextHeight = 25
+  object NomeEdit: TLabeledEdit
+    AlignWithMargins = True
+    Left = 72
+    Top = 53
+    Width = 240
+    Height = 33
+    Alignment = taCenter
+    EditLabel.Width = 18
+    EditLabel.Height = 25
+    EditLabel.Caption = 'ID'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    MaxLength = 45
+    ParentFont = False
+    TabOrder = 0
+    Text = ''
+    OnKeyPress = NomeEditKeyPress
+  end
+  object SenhaEdit: TLabeledEdit
+    AlignWithMargins = True
+    Left = 72
+    Top = 136
+    Width = 240
+    Height = 33
+    Alignment = taCenter
+    EditLabel.Width = 52
+    EditLabel.Height = 25
+    EditLabel.Caption = 'Senha'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    MaxLength = 45
+    ParentFont = False
+    PasswordChar = '*'
+    TabOrder = 1
+    Text = ''
+  end
+  object ButtonLogin: TButton
+    AlignWithMargins = True
+    Left = 229
+    Top = 191
+    Width = 83
+    Height = 49
+    Caption = 'Login'
+    TabOrder = 3
+    OnClick = ButtonLoginClick
+  end
+  object ButtonCancelar: TButton
+    AlignWithMargins = True
+    Left = 72
+    Top = 191
+    Width = 83
+    Height = 49
+    Caption = 'Cancelar'
+    TabOrder = 2
+  end
+  object LoginConnection: TADOConnection
+    ConnectionString = 
+      'Provider=MSOLEDBSQL.1;Password=SqlServer2019!;Persist Security I' +
+      'nfo=True;User ID=sa;Initial Catalog=agili;Data Source=127.0.0.1:' +
+      '1433;Use Procedure for Prepare=1;Auto Translate=True;Packet Size' +
+      '=4096;Workstation ID=DESKTOP-O33EKG2;Initial File Name="";Use En' +
+      'cryption for Data=False;Tag with column collation when possible=' +
+      'False;MARS Connection=False;DataTypeCompatibility=0;Trust Server' +
+      ' Certificate=True;Server SPN="";Application Intent=READWRITE;Mul' +
+      'tiSubnetFailover=False;Use FMTONLY=False;Authentication="";Acces' +
+      's Token="";TransparentNetworkIPResolution=True;Connect Retry Cou' +
+      'nt=1;Connect Retry Interval=10'
+    Provider = 'MSOLEDBSQL.1'
+    Left = 32
+    Top = 256
+  end
+  object LoginQuery: TADOQuery
+    Connection = LoginConnection
+    Parameters = <
+      item
+        Name = 'idusuario'
+        DataType = ftString
+        Size = -1
+        Value = Null
+      end
+      item
+        Name = 'senha'
+        DataType = ftString
+        Size = -1
+        Value = Null
+      end>
+    SQL.Strings = (
+      'select  permissao from Usuario'
+      'where IdUsuario  = :IdUsuario'
+      'and   senha          = :senha')
+    Left = 120
+    Top = 256
+  end
+end

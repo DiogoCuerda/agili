@@ -1,0 +1,14 @@
+program Project1;
+
+uses
+  Vcl.Forms,
+  login in 'login.pas' {LoginForm};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TLoginForm, LoginForm);
+  Application.Run;
+end.

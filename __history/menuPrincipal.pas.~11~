@@ -1,0 +1,64 @@
+unit menuPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Menus;
+
+type
+  TMenuPrincipalForm = class(TForm)
+    MainMenu1: TMainMenu;
+    AdministradorMenuItem: TMenuItem;
+    Usurios1: TMenuItem;
+    Itens1: TMenuItem;
+    FornecedorMenuItem: TMenuItem;
+    Pedidos1: TMenuItem;
+    FinanceiroMenuItem: TMenuItem;
+    RelatrioMensal1: TMenuItem;
+    ColaboradorMenuItem: TMenuItem;
+    FazerPedido1: TMenuItem;
+    procedure FormCreate(Sender: TObject);
+
+  private
+    var
+    Permissao: Char;
+  public
+    constructor CreateCustom(AOwner: TComponent; APermissao:Char);
+  end;
+
+var
+  MenuPrincipalForm: TMenuPrincipalForm;
+
+implementation
+
+{$R *.dfm}
+
+
+
+constructor  TMenuPrincipalForm.CreateCustom(AOwner: TComponent; APermissao: Char);
+begin
+    inherited Create(AOwner);
+    Permissao := APermissao;
+end;
+
+
+
+
+procedure TMenuPrincipalForm.FormCreate(Sender: TObject);
+begin
+  case Permissao of
+    'A': begin
+      FornecedorMenuItem.Visible    := False;
+      FinanceiroMenuItem.Visible    := False;
+      ColaboradorMenuItem.Visible   := False;
+      AdministradorMenuItem.Visible := True;
+
+
+    end;
+
+
+  end;
+end;
+
+end.
