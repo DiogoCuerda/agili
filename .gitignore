@@ -24,7 +24,11 @@
 # Logs and databases #
 ######################
 *.log
-
+*.res
+*.identcache
+*.tvsconfig
+*.res
+*.local
 *.sqlite
 
 # OS generated files #
