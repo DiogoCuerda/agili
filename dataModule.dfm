@@ -1,6 +1,6 @@
 object DataModuleForm: TDataModuleForm
-  Height = 480
-  Width = 640
+  Height = 116
+  Width = 130
   object DatabaseConnection: TADOConnection
     ConnectionString = 
       'Provider=MSOLEDBSQL.1;Password=SqlServer2019!;Persist Security I' +
@@ -15,7 +15,7 @@ object DataModuleForm: TDataModuleForm
       'nt=1;Connect Retry Interval=10'
     LoginPrompt = False
     Provider = 'MSOLEDBSQL.1'
-    Left = 80
-    Top = 72
+    Left = 40
+    Top = 32
   end
 end

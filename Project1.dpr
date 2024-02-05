@@ -7,7 +7,9 @@ uses
   cadastroUsuario in 'cadastroUsuario.pas' {CadastroUsuarioForm},
   dataModule in 'dataModule.pas' {DataModuleForm: TDataModule},
   cadastroItem in 'cadastroItem.pas' {CadastroItemForm},
-  fazerPedido in 'fazerPedido.pas' {FazerPedidoForm};
+  fazerPedido in 'fazerPedido.pas' {FazerPedidoForm},
+  listaPedidos in 'listaPedidos.pas' {ListaPedidoForm},
+  relatorioMensal in 'relatorioMensal.pas' {RelatorioMensalForm};
 
 {$R *.res}
 

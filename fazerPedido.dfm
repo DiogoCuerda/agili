@@ -4,7 +4,7 @@ object FazerPedidoForm: TFazerPedidoForm
   Caption = 'Fazer Pedido'
   ClientHeight = 454
   ClientWidth = 624
-  Color = clPlum
+  Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
@@ -153,13 +153,15 @@ object FazerPedidoForm: TFazerPedidoForm
     TabOrder = 4
     OnClick = RemoverButtonClick
   end
-  object Button3: TButton
+  object EnviarButton: TButton
     Left = 8
     Top = 421
     Width = 94
     Height = 25
     Caption = 'Enviar Pedido'
+    Enabled = False
     TabOrder = 5
+    OnClick = EnviarButtonClick
   end
   object SelecionaButton: TButton
     Left = 159
@@ -205,8 +207,8 @@ object FazerPedidoForm: TFazerPedidoForm
   end
   object AdicionadosDataSource: TDataSource
     DataSet = AdicionadosDataSet
-    Left = 576
-    Top = 288
+    Left = 560
+    Top = 224
   end
   object AdicionadosDataSet: TClientDataSet
     Aggregates = <>
@@ -235,7 +237,15 @@ object FazerPedidoForm: TFazerPedidoForm
     IndexDefs = <>
     Params = <>
     StoreDefs = True
-    Left = 496
-    Top = 288
+    Left = 488
+    Top = 224
+  end
+  object PedidoDataTable: TADOTable
+    Left = 480
+    Top = 352
+  end
+  object PedidoItemDataTable: TADOTable
+    Left = 536
+    Top = 352
   end
 end

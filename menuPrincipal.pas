@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Menus,cadastroUsuario,
-  cadastroItem,fazerPedido;
+  cadastroItem,fazerPedido, Data.DB, Data.Win.ADODB,dataModule,listaPedidos,relatorioMensal;
 
 type
   TMenuPrincipalForm = class(TForm)
@@ -19,10 +19,13 @@ type
     ColaboradorMenuItem: TMenuItem;
     FazerPedido1: TMenuItem;
     ItemMenuItem: TMenuItem;
+    VerificaPedidoQuery: TADOQuery;
     procedure FormCreate(Sender: TObject);
     procedure UsuariosMenuItemClick(Sender: TObject);
     procedure ItemMenuItemClick(Sender: TObject);
     procedure FazerPedido1Click(Sender: TObject);
+    procedure Pedidos1Click(Sender: TObject);
+    procedure RelatrioMensal1Click(Sender: TObject);
 
   private
     var
@@ -53,15 +56,37 @@ end;
 
 procedure TMenuPrincipalForm.FazerPedido1Click(Sender: TObject);
 var FazerPedido : TFazerPedidoForm;
+var DataModule  : TDataModuleForm;
 begin
 
-   try
-     FazerPedido := TFazerPedidoForm.Create(self);
-     FazerPedido.ShowModal;
-   finally
-     FazerPedido.Close;
-     FazerPedido.Destroy;
-   end;
+   DataModule := TDataModuleForm.Create(self);
+
+   With VerificaPedidoQuery do
+   begin
+     Connection := DataModule.DatabaseConnection;
+     Parameters.ParamByName('idcolaborador').value := IdUsuario;
+     Parameters.ParamByName('iddata').value := Date;
+     Active := True;
+     Open;
+
+     if Eof then
+     begin
+        try
+          FazerPedido := TFazerPedidoForm.Create(Self);
+          FazerPedido.ShowModal;
+
+        finally
+          FazerPedido.Release;
+        end;
+
+     end
+     else
+       ShowMessage('Usuário já fez pedido hoje, não é mais possível pedir.');
+
+     close;
+
+   end
+
 end;
 
 procedure TMenuPrincipalForm.FormCreate(Sender: TObject);
@@ -73,10 +98,8 @@ begin
       FornecedorMenuItem.Visible    := True;
     'C':
       ColaboradorMenuItem.Visible   := True;
-
-
-
-
+    'R':
+      FinanceiroMenuItem.Visible    := True;
 
   end;
 end;
@@ -85,29 +108,55 @@ procedure TMenuPrincipalForm.ItemMenuItemClick(Sender: TObject);
 var CadastroItem : TCadastroItemForm;
 begin
 
-    try
-      CadastroItem := TCadastroItemForm.CreateCustom(self,IdUsuario);
-      CadastroItem.ShowModal;
-    finally
-      CadastroItem.Close;
-      Cadastroitem.Destroy;
+        try
+          CadastroItem := TCadastroItemForm.Create(Self);
+          CadastroItem.ShowModal;
 
-    end;
+        finally
+          CadastroItem.Release;
+        end;
 
 end;
+
+procedure TMenuPrincipalForm.Pedidos1Click(Sender: TObject);
+var ListaPedido: TListaPedidoForm;
+begin
+     try
+        ListaPedido := TListaPedidoForm.Create(Self);
+        ListaPedido.ShowModal;
+
+     finally
+        ListaPedido.Release;
+     end;
+
+end;
+
+procedure TMenuPrincipalForm.RelatrioMensal1Click(Sender: TObject);
+var RelatorioMensal : TRelatorioMensalForm;
+begin
+
+     try
+        RelatorioMensal := TRelatorioMensalForm.Create(Self);
+        RelatorioMensal.ShowModal;
+
+     finally
+        RelatorioMensal.Release;
+     end;
+
+end;
+
+
 
 procedure TMenuPrincipalForm.UsuariosMenuItemClick(Sender: TObject);
 var CadastroUsuario : TCadastroUsuarioForm;
 begin
-     try
-        CadastroUsuario := TCadastroUsuarioForm.Create(self);
+    try
+        CadastroUsuario := TCadastroUsuarioForm.Create(Self);
         CadastroUsuario.ShowModal;
 
      finally
-        CadastroUsuario.Close;
-        CadastroUsuario.Destroy;
-
-      end;
+        CadastroUsuario.Release;
+     end;
 end;
 
 end.

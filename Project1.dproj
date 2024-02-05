@@ -149,6 +149,14 @@
             <Form>FazerPedidoForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="listaPedidos.pas">
+            <Form>ListaPedidoForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="relatorioMensal.pas">
+            <Form>RelatorioMensalForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

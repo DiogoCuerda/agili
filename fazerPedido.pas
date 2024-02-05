@@ -19,24 +19,30 @@ type
     AdicionadosGrid: TDBGrid;
     RemoverButton: TButton;
     DataLabel: TLabel;
-    Button3: TButton;
+    EnviarButton: TButton;
     SelecionaButton: TButton;
     DisponiveisDataSource: TDataSource;
     DisponiveisQuery: TADOQuery;
     AdicionadosDataSource: TDataSource;
     AdicionadosDataSet: TClientDataSet;
     LabelTotal: TLabel;
+    PedidoDataTable: TADOTable;
+    PedidoItemDataTable: TADOTable;
     procedure FormCreate(Sender: TObject);
     procedure SelecionaButtonClick(Sender: TObject);
     procedure AdicionarButtonClick(Sender: TObject);
     procedure RemoverButtonClick(Sender: TObject);
+    procedure EnviarButtonClick(Sender: TObject);
+
+
   private
     var DataAtual: TDate;
     var IdFornecedor: Integer;
+    var IdColaborador: Integer;
     var Total: Double;
     procedure HabilitaCampos;
   public
-    { Public declarations }
+    constructor CreateCustom(AOwner: TComponent; AId:Integer);
   end;
 
 var
@@ -48,49 +54,31 @@ implementation
 {$R *.dfm}
 
 
+constructor TFazerPedidoForm.CreateCustom(AOwner: TComponent; AId:Integer);
+begin
+    inherited Create(AOwner);
+    IdColaborador := AId;
+end;
+
 procedure TFazerPedidoForm.HabilitaCampos;
 begin
-    if (IdFornecedor <> 0) and not AdicionadosDataSet.Eof then
+
+    SelecionaButton.Enabled := (IdFornecedor = 0);
+    FornecedorComboBox.Enabled := SelecionaButton.Enabled;
+
+    AdicionarButton.Enabled := (DisponiveisQuery.RecordCount > 0);
+    DisponiveisGrid.Enabled := AdicionarButton.Enabled;
+
+    AdicionadosGrid.Enabled := (AdicionadosDataSet.RecordCount > 0);
+    RemoverButton.Enabled := AdicionadosGrid.Enabled;
+
+    if not AdicionadosGrid.Enabled then
     begin
-      SelecionaButton.Enabled := False;
-      FornecedorComboBox.Enabled := False;
+      SelecionaButton.Enabled := True;
+      FornecedorComboBox.Enabled := True;
     end;
 
-
-
-    if not DisponiveisQuery.Eof then
-    begin
-
-       AdicionarButton.Enabled := True;
-       DisponiveisGrid.Enabled := True;
-
-    end
-    else
-    begin
-
-       AdicionarButton.Enabled := False;
-       DisponiveisGrid.Enabled := False;
-
-    end;
-
-
-    if not AdicionadosDataSet.Eof  then
-    begin
-
-       AdicionadosGrid.Enabled := True;
-       RemoverButton.Enabled   := True;
-
-    end
-    else
-    begin
-
-       AdicionadosGrid.Enabled := False;
-       RemoverButton.Enabled   := False;
-
-    end;
-
-
-
+    EnviarButton.Enabled :=  RemoverButton.Enabled;
 end;
 
 procedure TFazerPedidoForm.RemoverButtonClick(Sender: TObject);
@@ -119,6 +107,8 @@ end;
 
 procedure TFazerPedidoForm.SelecionaButtonClick(Sender: TObject);
 begin
+  if not VarIsNull(FornecedorComboBox.KeyValue) then
+  begin
     Total := 0.0;
     IdFornecedor := FornecedorComboBox.KeyValue;
     AdicionadosDataSet.Close;
@@ -139,13 +129,18 @@ begin
 
     HabilitaCampos;
 
+  end
+  else
+   ShowMessage('Selecione um fornecedor');
+
+
+
 end;
 
 procedure TFazerPedidoForm.AdicionarButtonClick(Sender: TObject);
 var IdItem: Integer;
 var Editado: Boolean;
 begin
-
 
     Editado := False;
     IdItem := DisponiveisQuery.FieldByName('iditem').AsInteger;
@@ -187,15 +182,82 @@ begin
    LabelTotal.Caption :=  'Total : ' + Format('%.2f', [Total]);
 end;
 
+procedure TFazerPedidoForm.EnviarButtonClick(Sender: TObject);
+var IdPedido, Resposta:Integer;
+begin
+
+   Resposta := MessageDlg('Após continuar não será possível alterar seu pedido!', mtConfirmation, mbOKCancel, 0);
+   if Resposta = 1 then
+   begin
+
+           with PedidoDataTable do
+           begin
+
+             Connection := DataModule.DatabaseConnection;
+
+             TableName := 'Pedido';
+             Active    := True;
+             Insert;
+             FieldByName('IdFornecedor').AsInteger  := IdFornecedor;
+             FieldByName('IdColaborador').AsInteger := IdColaborador;
+             FieldByName('Data').AsDateTime         := DataAtual;
+
+             Post;
+
+             Filter := 'IdFornecedor = ' + IntToStr(IdFornecedor) +
+                       ' and IdColaborador = ' + IntToStr(IdColaborador) +
+                       ' and data = ' + QuotedStr(DateToStr(DataAtual));
+             Filtered := True;
+             IdPedido := FieldByName('IdPedido').AsInteger;
+
+           end;
+
+           with PedidoItemDataTable do
+           begin
+
+             Connection := DataModule.DatabaseConnection;
+
+             TableName := 'PedidoItem';
+             Active    := True;
+             Open;
+
+             AdicionadosDataSet.First;
+             while not AdicionadosDataSet.Eof do
+             begin
+
+               Append;
+               FieldByName('IdPedido').AsInteger := IdPedido;
+               FieldByName('IdItem').AsInteger   := AdicionadosDataSet.FieldByName('IdItem').AsInteger;
+               FieldByName('preco').AsFloat      := AdicionadosDataSet.FieldByName('preco').AsInteger;
+               FieldByName('Quantidade').AsFloat := AdicionadosDataSet.FieldByName('Quantidade').AsInteger;
+               Post;
+               AdicionadosDataSet.Next;
+
+             end;
+
+             UpdateBatch(arAll);
+
+           end;
+           Self.Close;
+   end
+
+
+
+end;
+
+
+
 procedure TFazerPedidoForm.FormCreate(Sender: TObject);
 begin
    DataModule := TDataModuleForm.Create(self);
    FornecedorQuery.Connection := DataModule.DatabaseConnection;
    FornecedorQuery.Active := True;
    DataAtual := Date;
-   DataLabel.Caption := FormatDateTime('DD/MM/YYYY', DataAtual);
+   DataLabel.Caption := 'Data : ' + FormatDateTime('DD/MM/YYYY', DataAtual);
    IdFornecedor := 0;
 
 end;
+
+
 
 end.

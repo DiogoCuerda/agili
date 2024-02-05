@@ -1,0 +1,144 @@
+unit menuPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Menus,cadastroUsuario,
+  cadastroItem,fazerPedido, Data.DB, Data.Win.ADODB,dataModule;
+
+type
+  TMenuPrincipalForm = class(TForm)
+    MainMenu1: TMainMenu;
+    AdministradorMenuItem: TMenuItem;
+    UsuariosMenuItem: TMenuItem;
+    FornecedorMenuItem: TMenuItem;
+    Pedidos1: TMenuItem;
+    FinanceiroMenuItem: TMenuItem;
+    RelatrioMensal1: TMenuItem;
+    ColaboradorMenuItem: TMenuItem;
+    FazerPedido1: TMenuItem;
+    ItemMenuItem: TMenuItem;
+    VerificaPedidoQuery: TADOQuery;
+    procedure FormCreate(Sender: TObject);
+    procedure UsuariosMenuItemClick(Sender: TObject);
+    procedure ItemMenuItemClick(Sender: TObject);
+    procedure FazerPedido1Click(Sender: TObject);
+
+  private
+    var
+    Permissao: Char;
+    IdUsuario: Integer;
+  public
+    constructor CreateCustom(AOwner: TComponent; APermissao:Char; AId:Integer);
+  end;
+
+var
+  MenuPrincipalForm: TMenuPrincipalForm;
+
+implementation
+
+{$R *.dfm}
+
+
+
+constructor  TMenuPrincipalForm.CreateCustom(AOwner: TComponent; APermissao: Char; AId:Integer);
+begin
+    inherited Create(AOwner);
+    Permissao := APermissao;
+    IdUsuario := AId;
+end;
+
+
+
+
+procedure TMenuPrincipalForm.FazerPedido1Click(Sender: TObject);
+var FazerPedido : TFazerPedidoForm;
+var DataModule  : TDataModuleForm;
+begin
+
+   DataModule := TDataModuleForm.Create(self);
+
+   With VerificaPedidoQuery do
+   begin
+     Connection := DataModule.DatabaseConnection;
+     Parameters.ParamByName('idcolaborador').value := IdUsuario;
+     Parameters.ParamByName('iddata').value := Date;
+     Active := True;
+     Open;
+
+     if Eof then
+     begin
+       try
+         FazerPedido := TFazerPedidoForm.CreateCustom(self,IdUsuario);
+         FazerPedido.ShowModal;
+       finally
+         FazerPedido.Close;
+         FazerPedido.Destroy;
+       end;
+
+     end
+     else
+       ShowMessage('Usuário já fez pedido hoje, não é mais possível pedir.');
+
+     close;
+
+
+
+   end
+
+
+
+
+
+
+
+end;
+
+procedure TMenuPrincipalForm.FormCreate(Sender: TObject);
+begin
+  case Permissao of
+    'A':
+      AdministradorMenuItem.Visible := True;
+    'F':
+      FornecedorMenuItem.Visible    := True;
+    'C':
+      ColaboradorMenuItem.Visible   := True;
+
+
+
+
+
+  end;
+end;
+
+procedure TMenuPrincipalForm.ItemMenuItemClick(Sender: TObject);
+var CadastroItem : TCadastroItemForm;
+begin
+
+    try
+      CadastroItem := TCadastroItemForm.CreateCustom(self,IdUsuario);
+      CadastroItem.ShowModal;
+    finally
+      CadastroItem.Close;
+      Cadastroitem.Destroy;
+
+    end;
+
+end;
+
+procedure TMenuPrincipalForm.UsuariosMenuItemClick(Sender: TObject);
+var CadastroUsuario : TCadastroUsuarioForm;
+begin
+     try
+        CadastroUsuario := TCadastroUsuarioForm.Create(self);
+        CadastroUsuario.ShowModal;
+
+     finally
+        CadastroUsuario.Close;
+        CadastroUsuario.Destroy;
+
+      end;
+end;
+
+end.
