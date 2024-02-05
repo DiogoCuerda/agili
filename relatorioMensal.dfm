@@ -1,6 +1,8 @@
 object RelatorioMensalForm: TRelatorioMensalForm
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
   Caption = 'Relat'#243'rio Mensal'
   ClientHeight = 410
   ClientWidth = 610
@@ -10,6 +12,7 @@ object RelatorioMensalForm: TRelatorioMensalForm
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poScreenCenter
   OnCreate = FormCreate
   TextHeight = 15
   object Label1: TLabel

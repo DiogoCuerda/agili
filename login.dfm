@@ -1,6 +1,7 @@
 object LoginForm: TLoginForm
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Login'
   ClientHeight = 309
@@ -11,6 +12,7 @@ object LoginForm: TLoginForm
   Font.Height = -19
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poScreenCenter
   OnCreate = FormCreate
   TextHeight = 25
   object NomeEdit: TLabeledEdit
@@ -92,7 +94,8 @@ object LoginForm: TLoginForm
     SQL.Strings = (
       'select  permissao,idusuario from Usuario'
       'where IdUsuario  = :IdUsuario'
-      'and   senha          = :senha')
+      'and   senha          = :senha'
+      'and ativo = 1')
     Left = 8
     Top = 16
   end

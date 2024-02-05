@@ -1,7 +1,9 @@
 object CadastroItemForm: TCadastroItemForm
   Left = 0
   Top = 0
-  Caption = 'CadastroItemForm'
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsDialog
+  Caption = 'Cadastro Item'
   ClientHeight = 530
   ClientWidth = 770
   Color = clBtnFace
@@ -10,6 +12,7 @@ object CadastroItemForm: TCadastroItemForm
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poScreenCenter
   OnCreate = FormCreate
   TextHeight = 15
   object PageControl: TPageControl
@@ -17,7 +20,7 @@ object CadastroItemForm: TCadastroItemForm
     Top = 0
     Width = 770
     Height = 530
-    ActivePage = ItemListaTab
+    ActivePage = ItemFuncaoTab
     Align = alClient
     TabOrder = 0
     object ItemListaTab: TTabSheet
@@ -135,7 +138,7 @@ object CadastroItemForm: TCadastroItemForm
         Width = 75
         Height = 25
         Caption = 'Voltar'
-        TabOrder = 2
+        TabOrder = 3
         OnClick = VoltarButtonClick
       end
       object GravarButton: TButton
@@ -144,7 +147,7 @@ object CadastroItemForm: TCadastroItemForm
         Width = 75
         Height = 25
         Caption = 'Gravar'
-        TabOrder = 3
+        TabOrder = 4
         OnClick = GravarButtonClick
       end
       object DescricaoFuncaoEdit: TDBEdit
@@ -164,7 +167,7 @@ object CadastroItemForm: TCadastroItemForm
         Caption = 'Ativo'
         DataField = 'ATIVO'
         DataSource = ItemDataSource
-        TabOrder = 1
+        TabOrder = 2
       end
       object DBEdit1: TDBEdit
         Left = 323
@@ -173,7 +176,7 @@ object CadastroItemForm: TCadastroItemForm
         Height = 23
         DataField = 'PRECO'
         DataSource = ItemDataSource
-        TabOrder = 4
+        TabOrder = 1
       end
     end
   end

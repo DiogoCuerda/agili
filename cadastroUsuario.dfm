@@ -1,7 +1,8 @@
 object CadastroUsuarioForm: TCadastroUsuarioForm
   Left = 0
   Top = 0
-  BorderStyle = bsDialog
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
   Caption = 'Cadastro Usu'#225'rio'
   ClientHeight = 528
   ClientWidth = 770
@@ -11,6 +12,7 @@ object CadastroUsuarioForm: TCadastroUsuarioForm
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poScreenCenter
   OnCreate = FormCreate
   TextHeight = 15
   object PageControl: TPageControl
@@ -159,7 +161,7 @@ object CadastroUsuarioForm: TCadastroUsuarioForm
         Height = 25
         Caption = 'Gravar'
         TabOrder = 5
-        OnClick = VoltarButtonClick
+        OnClick = GravarButtonClick
       end
       object NomeFuncaoEdit: TDBEdit
         Left = 3

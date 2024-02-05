@@ -88,8 +88,8 @@ begin
      if fieldbyname('quantidade').AsInteger > 1 then
      begin
        Edit;
-       fieldbyname('quantidade').AsInteger := fieldbyname('quantidade').AsInteger - 1;
-       FieldByName('Total').AsFloat :=  FieldByName('Quantidade').AsInteger*FieldByName('preco').AsFloat;
+       Fieldbyname('quantidade').AsInteger := Fieldbyname('quantidade').AsInteger - 1;
+       FieldByName('Total').AsFloat        :=  FieldByName('Quantidade').AsInteger*FieldByName('preco').AsFloat;
        Total := Total - fieldbyname('preco').AsFloat;
        Post;
 
@@ -133,8 +133,6 @@ begin
   else
    ShowMessage('Selecione um fornecedor');
 
-
-
 end;
 
 procedure TFazerPedidoForm.AdicionarButtonClick(Sender: TObject);
@@ -173,7 +171,7 @@ begin
          FieldByName('iditem').AsInteger   := DisponiveisQuery.FieldByName('iditem').AsInteger;
          FieldByName('preco').asFloat      := DisponiveisQuery.FieldByName('preco').asFloat;
          FieldByName('quantidade').Asfloat := 1;
-         FieldByName('total').Asfloat := FieldByName('preco').asFloat;
+         FieldByName('total').Asfloat      := FieldByName('preco').asFloat;
          Total := Total + FieldByName('preco').asFloat;
          Post;
     end;
@@ -186,62 +184,62 @@ procedure TFazerPedidoForm.EnviarButtonClick(Sender: TObject);
 var IdPedido, Resposta:Integer;
 begin
 
-   Resposta := MessageDlg('Após continuar não será possível alterar seu pedido!', mtConfirmation, mbOKCancel, 0);
-   if Resposta = 1 then
-   begin
+  Resposta := MessageDlg('Após continuar não será possível alterar seu pedido!',
+    mtConfirmation, mbOKCancel, 0);
+  if Resposta = 1 then
+  begin
 
-           with PedidoDataTable do
-           begin
+    with PedidoDataTable do
+    begin
 
-             Connection := DataModule.DatabaseConnection;
+      Connection := dataModule.DatabaseConnection;
 
-             TableName := 'Pedido';
-             Active    := True;
-             Insert;
-             FieldByName('IdFornecedor').AsInteger  := IdFornecedor;
-             FieldByName('IdColaborador').AsInteger := IdColaborador;
-             FieldByName('Data').AsDateTime         := DataAtual;
+      TableName := 'Pedido';
+      Active := True;
+      Insert;
+      Fieldbyname('IdFornecedor').AsInteger  := IdFornecedor;
+      Fieldbyname('IdColaborador').AsInteger := IdColaborador;
+      Fieldbyname('Data').AsDateTime         := DataAtual;
 
-             Post;
+      Post;
 
-             Filter := 'IdFornecedor = ' + IntToStr(IdFornecedor) +
-                       ' and IdColaborador = ' + IntToStr(IdColaborador) +
-                       ' and data = ' + QuotedStr(DateToStr(DataAtual));
-             Filtered := True;
-             IdPedido := FieldByName('IdPedido').AsInteger;
+      Filter := 'IdFornecedor = ' + IntToStr(IdFornecedor) +
+        ' and IdColaborador = ' + IntToStr(IdColaborador) + ' and data = ' +
+        QuotedStr(DateToStr(DataAtual));
+      Filtered := True;
+      IdPedido := fieldbyname('IdPedido').AsInteger;
 
-           end;
+    end;
 
-           with PedidoItemDataTable do
-           begin
+    with PedidoItemDataTable do
+    begin
 
-             Connection := DataModule.DatabaseConnection;
+      Connection := dataModule.DatabaseConnection;
 
-             TableName := 'PedidoItem';
-             Active    := True;
-             Open;
+      TableName := 'PedidoItem';
+      Active := True;
+      Open;
 
-             AdicionadosDataSet.First;
-             while not AdicionadosDataSet.Eof do
-             begin
+      AdicionadosDataSet.First;
+      while not AdicionadosDataSet.Eof do
+      begin
 
-               Append;
-               FieldByName('IdPedido').AsInteger := IdPedido;
-               FieldByName('IdItem').AsInteger   := AdicionadosDataSet.FieldByName('IdItem').AsInteger;
-               FieldByName('preco').AsFloat      := AdicionadosDataSet.FieldByName('preco').AsInteger;
-               FieldByName('Quantidade').AsFloat := AdicionadosDataSet.FieldByName('Quantidade').AsInteger;
-               Post;
-               AdicionadosDataSet.Next;
+        Append;
+        Fieldbyname('IdPedido').AsInteger := IdPedido;
+        Fieldbyname('IdItem').AsInteger   := AdicionadosDataSet.fieldbyname('IdItem').AsInteger;
+        Fieldbyname('preco').AsFloat      := AdicionadosDataSet.fieldbyname('preco').AsInteger;
+        Fieldbyname('Quantidade').AsFloat := AdicionadosDataSet.fieldbyname('Quantidade').AsInteger;
 
-             end;
+        Post;
+        AdicionadosDataSet.Next;
 
-             UpdateBatch(arAll);
+      end;
 
-           end;
-           Self.Close;
-   end
+      UpdateBatch(arAll);
 
-
+    end;
+    Self.Close;
+  end;
 
 end;
 

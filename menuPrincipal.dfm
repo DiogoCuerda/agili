@@ -1,6 +1,8 @@
 object MenuPrincipalForm: TMenuPrincipalForm
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
   Caption = 'Menu'
   ClientHeight = 441
   ClientWidth = 624
@@ -11,6 +13,7 @@ object MenuPrincipalForm: TMenuPrincipalForm
   Font.Name = 'Segoe UI'
   Font.Style = []
   Menu = MainMenu1
+  Position = poScreenCenter
   OnCreate = FormCreate
   TextHeight = 15
   object MainMenu1: TMainMenu

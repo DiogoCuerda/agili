@@ -36,6 +36,7 @@ type
     procedure NovoButtonClick(Sender: TObject);
     procedure VoltarButtonClick(Sender: TObject);
     procedure EditarButtonClick(Sender: TObject);
+    procedure GravarButtonClick(Sender: TObject);
 
   private
     DataModule : TdataModuleForm;
@@ -61,10 +62,8 @@ begin
  else
    PageControl.ActivePage := UsuarioListaTab;
 
-
   PageControl.Pages[0].TabVisible := not PageControl.Pages[0].TabVisible;
   PageControl.Pages[1].TabVisible := not PageControl.Pages[1].TabVisible;
-
 end;
 
 
@@ -100,7 +99,12 @@ begin
   UsuarioDataTable.Connection := DataModule.DatabaseConnection;
   FiltrarButtonClick(self);
   UsuarioDataTable.Active := True;
+end;
 
+procedure TCadastroUsuarioForm.GravarButtonClick(Sender: TObject);
+begin
+ UsuarioDataTable.Post;
+ AlterarTab;
 end;
 
 procedure TCadastroUsuarioForm.NovoButtonClick(Sender: TObject);
@@ -108,14 +112,14 @@ begin
   AlterarTab;
   UsuarioDataTable.Insert;
   UsuarioDataTable.FieldByName('ativo').AsBoolean := True;
-
+  UsuarioDataTable.FieldByName('permissao').AsString := 'C';
 end;
 
 procedure TCadastroUsuarioForm.VoltarButtonClick(Sender: TObject);
 begin
-  UsuarioDataTable.Post;
+  UsuarioDataTable.Cancel;
+  UsuarioDataTable.First;
   AlterarTab;
-
 end;
 
 procedure TCadastroUsuarioForm.EditarButtonClick(Sender: TObject);

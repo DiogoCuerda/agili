@@ -50,7 +50,6 @@ begin
     Parameters.ParamByName('senha').Value      := SenhaEdit.Text;
     Open;
 
-
     if not eof then
     begin
 
@@ -63,15 +62,10 @@ begin
         MenuPrincipal.ShowModal;
 
       finally
-        MenuPrincipal.Close;
-        MenuPrincipal.Destroy;
+        MenuPrincipal.Release;
         Self.Close;
         Application.Terminate;
       end;
-
-      
-
-
 
 
     end

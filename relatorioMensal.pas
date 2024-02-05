@@ -78,17 +78,14 @@ begin
 
        end;
 
-       CSV.SaveToFile(Diretorio +'\' +ColaboradorComboBox.Text+'.csv');
+       CSV.SaveToFile(Diretorio + '\' +ColaboradorComboBox.Text+ '.csv');
        ShowMessage('Exportado com sucesso.');
     end;
 
    except
-       ShowMessage('Erro ao exportar, selecione um diretorio válido.');
+       ShowMessage('Erro ao exportar, selecione um diretório válido.');
 
    end;
-
-
-
 
 end;
 
@@ -105,10 +102,8 @@ begin
     Active     := True;
     Open;
 
-    if RecordCount > 0 then
-      ExportarButton.Enabled := True
-    else
-      ExportarButton.Enabled := False;
+    ExportarButton.Enabled := (RecordCount > 0);
+
   end;
 
 end;

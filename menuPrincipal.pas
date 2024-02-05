@@ -72,7 +72,7 @@ begin
      if Eof then
      begin
         try
-          FazerPedido := TFazerPedidoForm.Create(Self);
+          FazerPedido := TFazerPedidoForm.CreateCustom(Self,IdUsuario);
           FazerPedido.ShowModal;
 
         finally
@@ -109,7 +109,7 @@ var CadastroItem : TCadastroItemForm;
 begin
 
         try
-          CadastroItem := TCadastroItemForm.Create(Self);
+          CadastroItem := TCadastroItemForm.CreateCustom(Self,IdUsuario);
           CadastroItem.ShowModal;
 
         finally
@@ -122,7 +122,7 @@ procedure TMenuPrincipalForm.Pedidos1Click(Sender: TObject);
 var ListaPedido: TListaPedidoForm;
 begin
      try
-        ListaPedido := TListaPedidoForm.Create(Self);
+        ListaPedido := TListaPedidoForm.CreateCustom(Self,IdUsuario);
         ListaPedido.ShowModal;
 
      finally

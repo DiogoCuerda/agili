@@ -1,6 +1,8 @@
 object FazerPedidoForm: TFazerPedidoForm
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
   Caption = 'Fazer Pedido'
   ClientHeight = 454
   ClientWidth = 624
@@ -10,6 +12,7 @@ object FazerPedidoForm: TFazerPedidoForm
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poScreenCenter
   OnCreate = FormCreate
   TextHeight = 15
   object Label1: TLabel

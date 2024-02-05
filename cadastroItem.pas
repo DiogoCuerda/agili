@@ -124,6 +124,7 @@ end;
 
 procedure TCadastroItemForm.VoltarButtonClick(Sender: TObject);
 begin
+   ItemDataTable.Cancel;
    ItemDataTable.First;
    AlterarTab;
 end;

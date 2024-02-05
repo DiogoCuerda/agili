@@ -1,6 +1,8 @@
 object ListaPedidoForm: TListaPedidoForm
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
   Caption = 'Pedidos Recebidos'
   ClientHeight = 216
   ClientWidth = 579
@@ -10,6 +12,7 @@ object ListaPedidoForm: TListaPedidoForm
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poScreenCenter
   OnCreate = FormCreate
   TextHeight = 15
   object LabelTotal: TLabel
