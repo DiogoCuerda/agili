@@ -62,7 +62,7 @@ begin
         MenuPrincipal.ShowModal;
 
       finally
-        MenuPrincipal.Release;
+        MenuPrincipal.Free;
         Self.Close;
         Application.Terminate;
       end;

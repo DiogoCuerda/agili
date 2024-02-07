@@ -30,6 +30,7 @@ type
     procedure ExportarButtonClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FiltrarButtonClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     DataModule: TDataModuleForm;
   public
@@ -55,7 +56,7 @@ begin
     SeletorDiretorio.Options := [fdoPickFolders, fdoPathMustExist, fdoForceFileSystem];
     if SeletorDiretorio.Execute then
      Diretorio := SeletorDiretorio.FileName;
-    SeletorDiretorio.Free;
+
 
     with ListaPedidoQuery do
     begin
@@ -81,8 +82,11 @@ begin
        CSV.SaveToFile(Diretorio + '\' +ColaboradorComboBox.Text+ '.csv');
        ShowMessage('Exportado com sucesso.');
     end;
-
+       SeletorDiretorio.Free;
+       CSV.Free;
    except
+       SeletorDiretorio.Free;
+       CSV.Free;
        ShowMessage('Erro ao exportar, selecione um diretório válido.');
 
    end;
@@ -114,6 +118,11 @@ begin
    ClienteQuery.Connection := DataModule.DatabaseConnection;
    ClienteQuery.Active := True;
 
+end;
+
+procedure TRelatorioMensalForm.FormDestroy(Sender: TObject);
+begin
+  DataModule.Free;
 end;
 
 end.

@@ -76,7 +76,7 @@ begin
           FazerPedido.ShowModal;
 
         finally
-          FazerPedido.Release;
+          FazerPedido.Free;
         end;
 
      end
@@ -85,8 +85,8 @@ begin
 
      close;
 
-   end
-
+   end;
+    DataModule.Free;
 end;
 
 procedure TMenuPrincipalForm.FormCreate(Sender: TObject);
@@ -113,7 +113,7 @@ begin
           CadastroItem.ShowModal;
 
         finally
-          CadastroItem.Release;
+          CadastroItem.Free;
         end;
 
 end;
@@ -126,7 +126,7 @@ begin
         ListaPedido.ShowModal;
 
      finally
-        ListaPedido.Release;
+        ListaPedido.Free;
      end;
 
 end;
@@ -140,7 +140,7 @@ begin
         RelatorioMensal.ShowModal;
 
      finally
-        RelatorioMensal.Release;
+        RelatorioMensal.Free;
      end;
 
 end;
@@ -155,7 +155,7 @@ begin
         CadastroUsuario.ShowModal;
 
      finally
-        CadastroUsuario.Release;
+        CadastroUsuario.Free;
      end;
 end;
 

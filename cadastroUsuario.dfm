@@ -14,13 +14,14 @@ object CadastroUsuarioForm: TCadastroUsuarioForm
   Font.Style = []
   Position = poScreenCenter
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   TextHeight = 15
   object PageControl: TPageControl
     Left = 0
     Top = 0
     Width = 770
     Height = 528
-    ActivePage = UsuarioFuncaoTab
+    ActivePage = UsuarioListaTab
     Align = alClient
     TabOrder = 0
     object UsuarioListaTab: TTabSheet

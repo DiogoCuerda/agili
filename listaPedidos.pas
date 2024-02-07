@@ -20,6 +20,7 @@ type
     ListaPedidoQuerytotal: TFloatField;
     procedure FormCreate(Sender: TObject);
     procedure DataPedidoEditChange(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     IdFornecedor: Integer;
     DataAtual: TDate;
@@ -75,6 +76,11 @@ begin
     DataPedidoEdit.Date := DataAtual;
     DataPedidoEditChange(self);
 
+end;
+
+procedure TListaPedidoForm.FormDestroy(Sender: TObject);
+begin
+ DataModule.Free;
 end;
 
 end.

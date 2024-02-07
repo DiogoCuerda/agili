@@ -14,6 +14,7 @@ object RelatorioMensalForm: TRelatorioMensalForm
   Font.Style = []
   Position = poScreenCenter
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   TextHeight = 15
   object Label1: TLabel
     Left = 8

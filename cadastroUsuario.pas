@@ -37,6 +37,7 @@ type
     procedure VoltarButtonClick(Sender: TObject);
     procedure EditarButtonClick(Sender: TObject);
     procedure GravarButtonClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
 
   private
     DataModule : TdataModuleForm;
@@ -99,6 +100,11 @@ begin
   UsuarioDataTable.Connection := DataModule.DatabaseConnection;
   FiltrarButtonClick(self);
   UsuarioDataTable.Active := True;
+end;
+
+procedure TCadastroUsuarioForm.FormDestroy(Sender: TObject);
+begin
+ DataModule.Free;
 end;
 
 procedure TCadastroUsuarioForm.GravarButtonClick(Sender: TObject);

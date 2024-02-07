@@ -14,6 +14,7 @@ object ListaPedidoForm: TListaPedidoForm
   Font.Style = []
   Position = poScreenCenter
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   TextHeight = 15
   object LabelTotal: TLabel
     Left = 447

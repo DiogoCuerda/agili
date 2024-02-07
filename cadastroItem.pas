@@ -34,6 +34,7 @@ type
     procedure GravarButtonClick(Sender: TObject);
     procedure EditarButtonClick(Sender: TObject);
     procedure VoltarButtonClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     var IdFornecedor:Integer;
     DataModule : TdataModuleForm;
@@ -105,6 +106,11 @@ begin
   ItemDataTable.Connection := DataModule.DatabaseConnection;
   FiltrarButtonClick(self);
   ItemDataTable.Active := True;
+end;
+
+procedure TCadastroItemForm.FormDestroy(Sender: TObject);
+begin
+ DataModule.Free;
 end;
 
 procedure TCadastroItemForm.GravarButtonClick(Sender: TObject);

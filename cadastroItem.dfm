@@ -14,13 +14,14 @@ object CadastroItemForm: TCadastroItemForm
   Font.Style = []
   Position = poScreenCenter
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   TextHeight = 15
   object PageControl: TPageControl
     Left = 0
     Top = 0
     Width = 770
     Height = 530
-    ActivePage = ItemFuncaoTab
+    ActivePage = ItemListaTab
     Align = alClient
     TabOrder = 0
     object ItemListaTab: TTabSheet
@@ -48,19 +49,15 @@ object CadastroItemForm: TCadastroItemForm
         Columns = <
           item
             Expanded = False
-            FieldName = 'IDITEM'
-            Visible = True
-          end
-          item
-            Expanded = False
             FieldName = 'DESCRICAO'
+            Title.Caption = 'Descri'#231#227'o'
             Width = 131
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'PRECO'
-            Title.Caption = 'PRE'#199'O'
+            Title.Caption = 'Pre'#231'o'
             Width = 94
             Visible = True
           end>

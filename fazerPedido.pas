@@ -33,6 +33,7 @@ type
     procedure AdicionarButtonClick(Sender: TObject);
     procedure RemoverButtonClick(Sender: TObject);
     procedure EnviarButtonClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
 
 
   private
@@ -227,7 +228,7 @@ begin
         Append;
         Fieldbyname('IdPedido').AsInteger := IdPedido;
         Fieldbyname('IdItem').AsInteger   := AdicionadosDataSet.fieldbyname('IdItem').AsInteger;
-        Fieldbyname('preco').AsFloat      := AdicionadosDataSet.fieldbyname('preco').AsInteger;
+        Fieldbyname('preco').AsFloat      := AdicionadosDataSet.fieldbyname('preco').AsFloat;
         Fieldbyname('Quantidade').AsFloat := AdicionadosDataSet.fieldbyname('Quantidade').AsInteger;
 
         Post;
@@ -257,5 +258,10 @@ begin
 end;
 
 
+
+procedure TFazerPedidoForm.FormDestroy(Sender: TObject);
+begin
+ DataModule.Free;
+end;
 
 end.
